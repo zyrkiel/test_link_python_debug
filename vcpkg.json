@@ -1,0 +1,7 @@
+{
+  "builtin-baseline": "b051745c68faa6f65c493371d564c4eb8af34dad",
+  "dependencies": [
+    "python3",
+    "pybind11"
+  ]
+}
