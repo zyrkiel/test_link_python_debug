@@ -1,0 +1,42 @@
+diff --git i/CMakeLists.txt w/CMakeLists.txt
+index 6016ce6..18510c0 100644
+--- i/CMakeLists.txt
++++ w/CMakeLists.txt
+@@ -12,17 +12,22 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
+ 
+ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+ 
+-if(NOT CMAKE_BUILD_TYPE)
++if(NOT DEFINED CMAKE_BUILD_TYPE)
+   set(CMAKE_BUILD_TYPE
+       "Debug"
+       CACHE STRING "Choose the type of build" FORCE)
+ endif()
+ 
+-find_package(pybind11 CONFIG REQUIRED)
++if(CMAKE_BUILD_TYPE STREQUAL "Debug")
++  set(Python3_FIND_ABI "ON" "ANY" "ANY")
++else()
++  set(Python3_FIND_ABI "OFF" "ANY" "ANY")
++endif()
+ find_package(
+   Python3
+   COMPONENTS Interpreter Development
+   REQUIRED)
++find_package(pybind11 CONFIG REQUIRED)
+ 
+ add_subdirectory("foo_lib")
+ 
+diff --git i/vcpkg.json w/vcpkg.json
+index 7366696..4409845 100644
+--- i/vcpkg.json
++++ w/vcpkg.json
+@@ -1,7 +1,6 @@
+ {
+   "builtin-baseline": "b051745c68faa6f65c493371d564c4eb8af34dad",
+   "dependencies": [
+-    "python3",
+     "pybind11"
+   ]
+ }
+\ No newline at end of file
